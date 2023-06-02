@@ -34,4 +34,9 @@ public class RedisMessageService implements MessageService {
             }
         });
     }
+
+    @Override
+    public void startListening() {
+        // TODO: implement this method from the MessageService interface
+    }
 }

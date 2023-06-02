@@ -41,4 +41,9 @@ public class NatsMessageService implements MessageService {
             this.connection.publish(message);
         });
     }
+
+    @Override
+    public void startListening() {
+        // TODO: implement this method from the MessageService interface
+    }
 }
