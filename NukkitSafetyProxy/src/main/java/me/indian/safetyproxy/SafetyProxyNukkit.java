@@ -21,13 +21,11 @@ public class SafetyProxyNukkit extends PluginBase {
     }
 
     @Override
-    public void onLoad() {
+    public void onEnable() {
         instance = this;
         this.saveDefaultConfig();
-    }
 
-    @Override
-    public void onEnable() {
+
         final PluginManager pm = this.getServer().getPluginManager();
         final String serviceType = this.getConfig().getString("service.type");
         final String ip = this.getConfig().getString("service.ip");
