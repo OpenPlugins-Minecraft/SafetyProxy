@@ -2,5 +2,5 @@ package me.indian.safetyproxy;
 
 public interface MessageService {
 
-    void publishMessage(final String json, final String subject);
+    void publishMessage(final Object object, final String subject);
 }
