@@ -11,37 +11,30 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-    <artifactId>safetyproxy-waterdog</artifactId>
+    <artifactId>safetyproxy-core</artifactId>
     <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>waterdog-repo</id>
-            <url>https://repo.waterdog.dev/artifactory/main</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
-            <groupId>me.indian</groupId>
-            <artifactId>safetyproxy-core</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope> <!-- shade core module -->
+            <groupId>io.nats</groupId>
+            <artifactId>jnats</artifactId>
+            <version>2.16.11</version>
+            <scope>compile</scope> <!-- shade nats client to jar -->
         </dependency>
         <dependency>
-            <groupId>dev.waterdog.waterdogpe</groupId>
-            <artifactId>waterdog</artifactId>
-            <version>1.2.5-SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>4.3.0</version>
+            <scope>compile</scope> <!-- shade jedis (redis) client to jar -->
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>SafetyProxy-WaterdogPE ${project.version}</finalName>
+        <finalName>SafetyProxy-Core ${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

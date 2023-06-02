@@ -6,12 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SafetyProxy" />
+        <module name="safetyproxy-core" />
+        <module name="safetyproxy-nukkit" />
+        <module name="safetyproxy-waterdog" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="NukkitSafetyProxy" target="1.8" />
-      <module name="WaterdogPESafetyProxy" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>

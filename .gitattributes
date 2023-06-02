@@ -1,2 +1,16 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# intellij
+*.iml
+*.ipr
+*.iws
+.idea/
+.gradle/
+run/
+out/
+build/
+target/
+renovate.json
+
+.DS_Store
+[Dd]esktop.ini
+
+!gradle/wrapper/gradle-wrapper.jar

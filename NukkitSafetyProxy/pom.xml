@@ -1,24 +1,21 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>SafetyProxy</artifactId>
-        <groupId>me.indian.pl</groupId>
-        <version>1.0</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
+    
+	<parent>
+		<groupId>me.indian</groupId>
+		<artifactId>safetyproxy-parent</artifactId>
+		<version>1.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
 
-    <artifactId>NukkitSafetyProxy</artifactId>
+    <artifactId>safetyproxy-nukkit</artifactId>
     <packaging>jar</packaging>
-
-    <name>NukkitSafetyProxy</name>
-    <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
     <repositories>
@@ -28,28 +25,37 @@
         </repository>
     </repositories>
 
-
     <dependencies>
+        <dependency>
+            <groupId>me.indian</groupId>
+            <artifactId>safetyproxy-core</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope> <!-- shade core module -->
+        </dependency>
         <dependency>
             <groupId>cn.nukkit</groupId>
             <artifactId>nukkit</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 
-
     <build>
-        <defaultGoal>clean package</defaultGoal>
-        <finalName>${project.name}-${project.version}</finalName>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <resources>
-            <resource>
-                <filtering>true</filtering>
-                <directory>src/main/resources/</directory>
-            </resource>
-        </resources>
+        <finalName>SafetyProxy-Nukkit ${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
-
 </project>
