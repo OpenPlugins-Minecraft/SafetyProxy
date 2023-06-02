@@ -1,14 +1,6 @@
-main: me.indian.ostag.OsTag
-name: OsTag
+main: me.indian.safetyproxy.SafetyProxyNukkit
+name: SafetyProxyNukkit
 authors: [ IndianPL , Techno Neziw ]
-description: OsTag plugin
+description: SafetyProxyNukkit plugin
 version: '${project.version}'
 api: [ "1.0.14" ]
-softdepend:
-  - PlaceholderAPI
-  - LuckPerms
-commands:
-  ostag:
-    description: ostag management
-  tto:
-    description: test command
