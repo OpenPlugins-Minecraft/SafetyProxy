@@ -1,0 +1,6 @@
+main: me.indian.safetyproxy.SafetyProxyWaterdogPe
+name: SafetyProxyWaterdogPe
+authors: [ IndianPL , Techno Neziw ]
+description: SafetyProxyWaterdogPe plugin
+version: '${project.version}'
+api: [ "1.0.14" ]
