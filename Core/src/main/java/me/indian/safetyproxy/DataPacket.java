@@ -1,2 +1,4 @@
-package me.indian.safetyproxy;public class DataPacket {
+package me.indian.safetyproxy;
+
+public class DataPacket {
 }

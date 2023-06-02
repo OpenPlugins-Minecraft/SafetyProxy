@@ -1,5 +1,6 @@
 package me.indian.safetyproxy.message;
 
+import me.indian.safetyproxy.DataPacket;
 import me.indian.safetyproxy.MessageService;
 import me.indian.safetyproxy.serialization.JsonSerializer;
 import redis.clients.jedis.Jedis;
@@ -24,6 +25,9 @@ public class RedisMessageService implements MessageService {
 
     @Override
     public void publishMessage(final Object object, final String subject) {
+        if (!object.getClass().isAssignableFrom(DataPacket.class)) {
+            throw new UnsupportedOperationException("object must be of type DataPacket");
+        }
         this.executorService.execute(() -> {
             try (final Jedis jedis = this.jedisPool.getResource()) {
                 jedis.publish(subject, JsonSerializer.serialize(object));
