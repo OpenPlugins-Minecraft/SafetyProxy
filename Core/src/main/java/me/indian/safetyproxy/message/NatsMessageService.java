@@ -6,7 +6,6 @@ import io.nats.client.Nats;
 import io.nats.client.Options;
 import io.nats.client.impl.NatsMessage;
 import me.indian.safetyproxy.MessageService;
-import me.indian.safetyproxy.helper.GsonHelper;
 import me.indian.safetyproxy.serialization.JsonSerializer;
 
 import java.io.IOException;
