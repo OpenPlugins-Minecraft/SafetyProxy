@@ -1,0 +1,6 @@
+main: me.indian.safetyproxy.SafetyProxy;
+name: SafetyProxyNukkit
+authors: [ IndianPL , Techno Neziw ]
+description: SafetyProxyNukkit plugin
+version: '${project.version}'
+api: [ "1.0.14" ]
