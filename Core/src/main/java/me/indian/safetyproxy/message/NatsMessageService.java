@@ -7,6 +7,7 @@ import io.nats.client.Options;
 import io.nats.client.impl.NatsMessage;
 import me.indian.safetyproxy.MessageService;
 import me.indian.safetyproxy.helper.GsonHelper;
+import me.indian.safetyproxy.serialization.JsonSerializer;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -29,7 +30,7 @@ public class NatsMessageService implements MessageService {
     @Override
     public void publishMessage(final Object object, final String subject) {
         this.executorService.execute(() -> {
-            final String json = GsonHelper.getGson().toJson(object);
+            final String json = JsonSerializer.serialize(object);
             final Message message = NatsMessage.builder()
                     .subject(subject)
                     .data(json)
