@@ -23,6 +23,10 @@
             <id>waterdog-repo</id>
             <url>https://repo.waterdog.dev/artifactory/main</url>
         </repository>
+        <repository>
+            <id>opencollab-repo-snapshot</id>
+            <url>https://repo.opencollab.dev/main</url>
+        </repository>
     </repositories>
 
     <dependencies>
