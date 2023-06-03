@@ -1,4 +1,4 @@
-package me.indian.safetyproxy.message;
+package me.indian.safetyproxy.communication;
 
 import me.indian.safetyproxy.AbstractMessageListener;
 import me.indian.safetyproxy.DataPacket;

@@ -1,4 +1,4 @@
-package me.indian.safetyproxy.message;
+package me.indian.safetyproxy.communication;
 
 import io.nats.client.*;
 import io.nats.client.impl.NatsMessage;
