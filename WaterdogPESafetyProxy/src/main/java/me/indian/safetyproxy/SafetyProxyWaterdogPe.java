@@ -6,8 +6,7 @@ import dev.waterdog.waterdogpe.event.defaults.PlayerPreLoginEvent;
 import dev.waterdog.waterdogpe.plugin.Plugin;
 import me.indian.safetyproxy.listener.JoinPlayerListener;
 
-
-public class SafetyProxyWaterdogPe extends Plugin {
+public final class SafetyProxyWaterdogPe extends Plugin {
 
     @Override
     public void onEnable() {
@@ -16,9 +15,6 @@ public class SafetyProxyWaterdogPe extends Plugin {
 
         this.saveResource("config.yml");
         this.loadConfig();
-
-
-
         eventManager.subscribe(PlayerPreLoginEvent.class , playerPreLoginEvent -> new JoinPlayerListener().loginEvent(playerPreLoginEvent));
     }
 }

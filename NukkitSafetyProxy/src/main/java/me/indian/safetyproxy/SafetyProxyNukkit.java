@@ -17,7 +17,7 @@ import me.indian.safetyproxy.util.ThreadUtil;
 
 import java.util.Locale;
 
-public class SafetyProxyNukkit extends PluginBase {
+public final class SafetyProxyNukkit extends PluginBase {
 
     @Override
     public void onEnable() {
