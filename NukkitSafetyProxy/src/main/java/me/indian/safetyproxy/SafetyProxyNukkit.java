@@ -6,6 +6,7 @@ import cn.nukkit.utils.Config;
 import io.nats.client.Options;
 import me.indian.safetyproxy.handler.NukkitMessageHandler;
 import me.indian.safetyproxy.listener.PlayerPreLoginListener;
+import me.indian.safetyproxy.listener.PlayerQuitListener;
 import me.indian.safetyproxy.manager.NukkitUserManager;
 import me.indian.safetyproxy.message.NatsMessageService;
 import me.indian.safetyproxy.message.RedisMessageService;
@@ -52,6 +53,7 @@ public final class SafetyProxyNukkit extends PluginBase {
         messageService.addMessageListener(new UserJoinListener(messageHandler));
         messageService.addMessageListener(new UserLeaveListener(messageHandler));
 
+        pluginManager.registerEvents(new PlayerQuitListener(userManager), this);
         pluginManager.registerEvents(new PlayerPreLoginListener(this, userManager), this);
 
         this.checkForJava11();

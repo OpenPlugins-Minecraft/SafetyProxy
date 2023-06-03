@@ -7,6 +7,7 @@ import cn.nukkit.event.player.PlayerPreLoginEvent;
 import me.indian.safetyproxy.IUserManager;
 import me.indian.safetyproxy.SafetyProxyNukkit;
 import me.indian.safetyproxy.util.ColorUtil;
+import me.indian.safetyproxy.util.TransferUtil;
 
 public class PlayerPreLoginListener implements Listener {
 
@@ -25,9 +26,12 @@ public class PlayerPreLoginListener implements Listener {
             event.setKickMessage(ColorUtil.color(this.plugin.getConfig().getString("messages.already-connected")));
             event.setCancelled(true);
         } else {
+            if (this.plugin.getConfig().getBoolean("transfer-settings.transfer-enabled")) {
+                TransferUtil.transfer(player, this.plugin.getConfig().getString("transfer-settings.proxy-address"));
+                return;
+            }
             event.setKickMessage(ColorUtil.color(this.plugin.getConfig().getString("messages.only-proxy-allowed")));
+            event.setCancelled(true);
         }
-
-        // TODO: transfer player to WaterdogPE proxy if enabled in config.yml
     }
 }

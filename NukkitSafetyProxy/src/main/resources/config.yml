@@ -17,13 +17,13 @@ messaging-service:
   # Password to authenticate with messaging service
   password: 'PASTE-YOUR-PASSWORD-HERE'
 
-# Here you can provide your WaterdogPE proxy information, so we can transfer player connection
+# Here you can provide your WaterdogPE proxy address, so we can transfer player connection
 # directly to your WaterdogPE proxy
 transfer-settings:
   # Set to true if you want to redirect connection to your proxy
   transfer-enabled: false
-  # WaterdogPE IP address
-  proxy-address: '127.0.0.1'
+  # WaterdogPE IP address (with port)
+  proxy-address: '127.0.0.1:19132'
 
 # Messages configuration (Nukkit side)
 messages:
