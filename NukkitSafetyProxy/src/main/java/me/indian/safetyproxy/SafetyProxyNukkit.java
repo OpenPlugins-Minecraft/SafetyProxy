@@ -32,7 +32,8 @@ public class SafetyProxyNukkit extends PluginBase {
         if (serviceType.toUpperCase(Locale.ROOT).equals("NATS")) {
             final Options options = new Options.Builder()
                     .server("nats://" + config.getString("messaging-service.host") + ":" + config.getInt("messaging-service.port"))
-                    .userInfo(config.getString("messaging-service.username"), config.getString("messaging-service.password"))
+                    .userInfo(config.getString("messaging-service.username").equals("your_username") ? null : config.getString("messaging-service.username"),
+                            config.getString("messaging-service.password").equals("PASTE-YOUR-PASSWORD-HERE") ? null : config.getString("messaging-service.password"))
                     .maxReconnects(-1)
                     .build();
             messageService = new NatsMessageService(options);
