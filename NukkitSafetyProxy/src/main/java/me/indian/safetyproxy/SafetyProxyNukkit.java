@@ -12,6 +12,7 @@ import me.indian.safetyproxy.communication.NatsMessageService;
 import me.indian.safetyproxy.communication.RedisMessageService;
 import me.indian.safetyproxy.messaging.UserJoinListener;
 import me.indian.safetyproxy.messaging.UserLeaveListener;
+import me.indian.safetyproxy.util.ColorUtil;
 import me.indian.safetyproxy.util.JavaUtil;
 import me.indian.safetyproxy.util.SystemUtil;
 import me.indian.safetyproxy.util.ThreadUtil;
@@ -28,6 +29,7 @@ public final class SafetyProxyNukkit extends PluginBase {
         final PluginManager pluginManager = this.getServer().getPluginManager();
         final Config config = this.getConfig();
         final String serviceType = config.getString("messaging-service.type");
+        final boolean debug = config.getBoolean("debug");
         final MessageService messageService;
 
         if (serviceType.toUpperCase(Locale.ROOT).equals("NATS")) {
@@ -50,9 +52,18 @@ public final class SafetyProxyNukkit extends PluginBase {
 
         final IUserManager userManager = new NukkitUserManager();
         final MessageHandler messageHandler = new NukkitMessageHandler(userManager);
-        messageService.addMessageListener(new UserJoinListener(messageHandler));
-        messageService.addMessageListener(new UserLeaveListener(messageHandler));
-
+        try {
+            messageService.addMessageListener(new UserJoinListener(messageHandler));
+            messageService.addMessageListener(new UserLeaveListener(messageHandler));
+        } catch (final Exception exception) {
+            this.getLogger().critical(ColorUtil.color("&cCan't add messaging listeners , probably can't connect to&b " + serviceType.toLowerCase() + "&c,check this"));
+            this.getLogger().critical(ColorUtil.color("&cPlugin is disabling...."));
+            if (debug) {
+                this.getLogger().error(String.valueOf(exception));
+            }
+            pluginManager.disablePlugin(this);
+            return;
+        }
         pluginManager.registerEvents(new PlayerQuitListener(userManager), this);
         pluginManager.registerEvents(new PlayerPreLoginListener(this, userManager), this);
 
