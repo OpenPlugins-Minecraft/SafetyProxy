@@ -62,8 +62,6 @@ public final class SafetyProxyWaterdogPe extends Plugin {
         eventManager.subscribe(PlayerPreLoginEvent.class, e -> new PlayerPreLoginListener(this, userManager));
         eventManager.subscribe(PlayerDisconnectEvent.class, e -> new PlayerDisconnectListener(userManager, messageService));
         eventManager.subscribe(PlayerLoginEvent.class, e -> new PlayerLoginListener(userManager, messageService));
-
-        this.checkForJava11();
     }
 
     private void checkForRoot() {
@@ -75,16 +73,6 @@ public final class SafetyProxyWaterdogPe extends Plugin {
             this.getLogger().error(" ");
             this.getLogger().error("Loading will be continued in 5 seconds...");
             ThreadUtil.sleep(5);
-        }
-    }
-
-    private void checkForJava11() {
-        if (JavaUtil.isJavaVersionLessThan11()) {
-            this.getLogger().warn("** UNSUPPORTED JAVA VERSION DETECTED **");
-            this.getLogger().warn(" ");
-            this.getLogger().warn("> Hey! You are using unsupported Java version");
-            this.getLogger().warn("> Please update to Java 11 or higher");
-            this.getLogger().warn(" ");
         }
     }
 }
