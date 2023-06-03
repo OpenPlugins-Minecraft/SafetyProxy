@@ -12,6 +12,8 @@ import me.indian.safetyproxy.communication.NatsMessageService;
 import me.indian.safetyproxy.communication.RedisMessageService;
 import me.indian.safetyproxy.messaging.UserJoinListener;
 import me.indian.safetyproxy.messaging.UserLeaveListener;
+import me.indian.safetyproxy.others.Metrics;
+import me.indian.safetyproxy.others.SafetyProxyNukkitMetrics;
 import me.indian.safetyproxy.util.ColorUtil;
 import me.indian.safetyproxy.util.JavaUtil;
 import me.indian.safetyproxy.util.SystemUtil;
@@ -66,6 +68,9 @@ public final class SafetyProxyNukkit extends PluginBase {
         }
         pluginManager.registerEvents(new PlayerQuitListener(userManager), this);
         pluginManager.registerEvents(new PlayerPreLoginListener(this, userManager), this);
+
+        new SafetyProxyNukkitMetrics(this, this.getLogger(), new Metrics(this)).run();
+
 
         this.checkForJava11();
     }
