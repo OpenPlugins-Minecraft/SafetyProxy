@@ -6,5 +6,5 @@ public interface MessageService {
 
     void publishMessage(final Object object, final String subject);
 
-    void startListening();
+    <T> void addMessageListener(final AbstractMessageListener<T> listener);
 }

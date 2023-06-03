@@ -7,7 +7,7 @@
 messaging-service:
   # Select messaging service you use to communicate with Nukkit servers
   # Currently available: Redis or Nats
-  type: redis
+  type: REDIS
   # IP address of host (use localhost if running locally)
   host: localhost
   # Port of host (default port for redis: 6379, 4222 for nats)

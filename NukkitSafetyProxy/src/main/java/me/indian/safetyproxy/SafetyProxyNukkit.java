@@ -2,20 +2,22 @@ package  me.indian.safetyproxy;
 
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
+import cn.nukkit.utils.Config;
 import io.nats.client.Options;
-import me.indian.safetyproxy.listener.PlayerLoginListener;
+import me.indian.safetyproxy.listener.PlayerPreLoginListener;
 import me.indian.safetyproxy.message.NatsMessageService;
 import me.indian.safetyproxy.message.RedisMessageService;
 import me.indian.safetyproxy.util.JavaUtil;
 import me.indian.safetyproxy.util.SystemUtil;
 import me.indian.safetyproxy.util.ThreadUtil;
 
+import java.util.Locale;
+
 public class SafetyProxyNukkit extends PluginBase {
 
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
-
         if (SystemUtil.isRoot()) {
             this.getLogger().error("** YOU ARE RUNNING AS ROOT USER **");
             this.getLogger().error(" ");
@@ -26,23 +28,31 @@ public class SafetyProxyNukkit extends PluginBase {
         }
         ThreadUtil.sleep(5);
 
-        final PluginManager pm = this.getServer().getPluginManager();
-        final String serviceType = this.getConfig().getString("service.type");
-        final String ip = this.getConfig().getString("service.ip");
-        final int port = this.getConfig().getInt("service.port");
+        final PluginManager pluginManager = this.getServer().getPluginManager();
+        final Config config = this.getConfig();
 
-        if (serviceType.equalsIgnoreCase("redis")) {
-            this.service = new RedisMessageService(ip, port);
-        } else if (serviceType.equalsIgnoreCase("nats")) {
-            this.service = new NatsMessageService(new Options.Builder()
-                    .server("nats://" + ip + ":" + port)
-                    .maxReconnects(-1)
-                    .build());
-        } else {
-            this.getLogger().error("Cant get service type, disabling plugin...");
-            pm.disablePlugin(this);
+        final String serviceType = config.getString("messaging-service.type");
+        final MessageService messageService;
+        switch (serviceType.toUpperCase(Locale.ROOT)) {
+            case "NATS":
+                final Options options = new Options.Builder()
+                        .server("nats://" + config.getString("messaging-service.host") + ":" + config.getInt("messaging-service.port"))
+                        .userInfo(config.getString("messaging-service.username"), config.getString("messaging-service.password"))
+                        .maxReconnects(-1)
+                        .build();
+                messageService = new NatsMessageService(options);
+                break;
+            case "REDIS":
+                messageService = new RedisMessageService(config.getString("messaging-service.host"), config.getInt("messaging-service.port"));
+                break;
+            default:
+                this.getLogger().error("** INVALID MESSAGING SERVICE TYPE **");
+                this.getLogger().error("Plugin is disabling....");
+                pluginManager.disablePlugin(this);
+                break;
         }
-        pm.registerEvents(new PlayerLoginListener(this), this);
+
+        pluginManager.registerEvents(new PlayerPreLoginListener(this), this);
 
         if (JavaUtil.isJavaVersionLessThan11()) {
             this.getLogger().warning("** UNSUPPORTED JAVA VERSION DETECTED **");

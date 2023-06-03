@@ -7,7 +7,7 @@
 messaging-service:
   # Select messaging service you use to communicate with WaterdogPE
   # Currently available: Redis or Nats
-  type: redis
+  type: REDIS
   # IP address of host (use localhost if running locally)
   host: localhost
   # Port of host (default port for redis: 6379, 4222 for nats)
@@ -16,3 +16,20 @@ messaging-service:
   username: your_username
   # Password to authenticate with messaging service
   password: 'PASTE-YOUR-PASSWORD-HERE'
+
+# Here you can provide your WaterdogPE proxy information, so we can transfer player connection
+# directly to your WaterdogPE proxy
+transfer-settings:
+  # Set to true if you want to redirect connection to your proxy
+  transfer-enabled: false
+  # WaterdogPE IP address
+  proxy-address: '127.0.0.1'
+
+# Messages configuration (Nukkit side)
+messages:
+  # Sent when player is already connected to the server
+  already-connected: '&cYou are already connected to this network'
+  # This message will be sent when player tries to connect directly
+  # bypassing your WaterdogPE proxy
+  # This is kick message and will only appear if transfer is disabled
+  only-proxy-allowed: '&4You need to connect via WaterdogPE proxy'

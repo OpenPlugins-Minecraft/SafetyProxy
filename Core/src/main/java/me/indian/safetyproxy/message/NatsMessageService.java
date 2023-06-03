@@ -1,12 +1,11 @@
 package me.indian.safetyproxy.message;
 
-import io.nats.client.Connection;
-import io.nats.client.Message;
-import io.nats.client.Nats;
-import io.nats.client.Options;
+import io.nats.client.*;
 import io.nats.client.impl.NatsMessage;
+import me.indian.safetyproxy.AbstractMessageListener;
 import me.indian.safetyproxy.DataPacket;
 import me.indian.safetyproxy.MessageService;
+import me.indian.safetyproxy.serialization.JsonDeserializer;
 import me.indian.safetyproxy.serialization.JsonSerializer;
 
 import java.io.IOException;
@@ -43,7 +42,11 @@ public class NatsMessageService implements MessageService {
     }
 
     @Override
-    public void startListening() {
-        // TODO: implement this method from the MessageService interface
+    public <T> void addMessageListener(final AbstractMessageListener<T> listener) {
+        final Dispatcher dispatcher = this.connection.createDispatcher(message -> {
+            final T dataReceived = JsonDeserializer.deserialize(message.getData(), listener.getClazz());
+            listener.onMessage(dataReceived);
+        });
+        dispatcher.subscribe(MessageService.SUBJECT);
     }
 }

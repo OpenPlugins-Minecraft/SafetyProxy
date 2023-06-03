@@ -1,10 +1,13 @@
 package me.indian.safetyproxy.message;
 
+import me.indian.safetyproxy.AbstractMessageListener;
 import me.indian.safetyproxy.DataPacket;
 import me.indian.safetyproxy.MessageService;
+import me.indian.safetyproxy.serialization.JsonDeserializer;
 import me.indian.safetyproxy.serialization.JsonSerializer;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPubSub;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,7 +39,15 @@ public class RedisMessageService implements MessageService {
     }
 
     @Override
-    public void startListening() {
-        // TODO: implement this method from the MessageService interface
+    public <T> void addMessageListener(final AbstractMessageListener<T> listener) {
+        try (final Jedis jedis = this.jedisPool.getResource()) {
+            jedis.subscribe(new JedisPubSub() {
+                @Override
+                public void onMessage(final String channel, final String message) {
+                    final T dataReceived = JsonDeserializer.deserialize(message, listener.getClazz());
+                    listener.onMessage(dataReceived);
+                }
+            }, MessageService.SUBJECT);
+        }
     }
 }
