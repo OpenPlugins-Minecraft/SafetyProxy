@@ -2,6 +2,9 @@
 # Remember to provide correct connection informations to your messaging application
 # unless plugin will automatically disable on startup
 
+#Debug for developers and helping users
+debug: true
+
 # Here you can define connection informations to your messaging application
 # you use to send and receive data
 messaging-service:
