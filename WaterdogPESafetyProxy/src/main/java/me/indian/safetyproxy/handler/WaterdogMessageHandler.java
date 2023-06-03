@@ -24,6 +24,8 @@ public class WaterdogMessageHandler implements MessageHandler {
 
     @Override
     public void handleMessage(final UserJoinDataPacket packet) {
-        this.userManager.addUser(packet.getNickname());
+        if (!this.userManager.isAlive(packet.getNickname())) {
+            this.userManager.addUser(packet.getNickname());
+        }
     }
 }
