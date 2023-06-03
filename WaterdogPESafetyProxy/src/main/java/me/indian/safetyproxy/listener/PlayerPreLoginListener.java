@@ -18,7 +18,7 @@ public class PlayerPreLoginListener {
     public void onPreLogin(final PlayerPreLoginEvent event) {
         final String name = event.getLoginData().getDisplayName();
         if (this.userManager.isAlive(name)) {
-            event.setCancelReason(ColorUtil.color(this.plugin.getConfig().getString("messages.player-already-logged-in")));
+            event.setCancelReason(ColorUtil.color(this.plugin.getConfig().getString("messages.already-connected")));
             event.setCancelled(true);
         }
     }

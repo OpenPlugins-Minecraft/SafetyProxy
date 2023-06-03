@@ -27,8 +27,6 @@ transfer-settings:
 
 # Messages configuration (Nukkit side)
 messages:
-  # Sent when player is already connected to the server
-  already-connected: '&cYou are already connected to this network'
   # This message will be sent when player tries to connect directly
   # bypassing your WaterdogPE proxy
   # This is kick message and will only appear if transfer is disabled

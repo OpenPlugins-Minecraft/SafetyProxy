@@ -22,10 +22,7 @@ public class PlayerPreLoginListener implements Listener {
     @EventHandler
     private void onPreLogin(final PlayerPreLoginEvent event) {
         final Player player = event.getPlayer();
-        if (this.userManager.isAlive(player.getName())) {
-            event.setKickMessage(ColorUtil.color(this.plugin.getConfig().getString("messages.already-connected")));
-            event.setCancelled(true);
-        } else {
+        if (!this.userManager.isAlive(player.getName())) {
             if (this.plugin.getConfig().getBoolean("transfer-settings.transfer-enabled")) {
                 TransferUtil.transfer(player, this.plugin.getConfig().getString("transfer-settings.proxy-address"));
                 return;
