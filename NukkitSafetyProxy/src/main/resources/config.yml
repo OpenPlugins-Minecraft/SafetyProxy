@@ -1,5 +1,18 @@
-#
-service:
-# Types: redis | nats
+# Nukkit Configuration File for SafetyProxy plugin
+# Remember to provide correct connection informations to your messaging application
+# unless plugin will automatically disable on startup
+
+# Here you can define connection informations to your messaging application
+# you use to send and receive data
+messaging-service:
+  # Select messaging service you use to communicate with WaterdogPE
+  # Currently available: Redis or Nats
   type: redis
-  ip: localhost
+  # IP address of host (use localhost if running locally)
+  host: localhost
+  # Port of host (default port for redis: 6379, 4222 for nats)
+  port: 6379
+  # Username to authenticate with messaging service
+  username: your_username
+  # Password to authenticate with messaging service
+  password: 'PASTE-YOUR-PASSWORD-HERE'

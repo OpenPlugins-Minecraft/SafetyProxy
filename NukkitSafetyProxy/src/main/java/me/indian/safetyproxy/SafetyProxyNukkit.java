@@ -6,25 +6,25 @@ import io.nats.client.Options;
 import me.indian.safetyproxy.listener.PlayerLoginListener;
 import me.indian.safetyproxy.message.NatsMessageService;
 import me.indian.safetyproxy.message.RedisMessageService;
+import me.indian.safetyproxy.util.JavaUtil;
+import me.indian.safetyproxy.util.SystemUtil;
+import me.indian.safetyproxy.util.ThreadUtil;
 
 public class SafetyProxyNukkit extends PluginBase {
 
-    private static SafetyProxyNukkit instance;
-    private MessageService service;
-
-    public static SafetyProxyNukkit getInstance() {
-        return instance;
-    }
-
-    public MessageService getService() {
-        return this.service;
-    }
-
     @Override
     public void onEnable() {
-        instance = this;
         this.saveDefaultConfig();
 
+        if (SystemUtil.isRoot()) {
+            this.getLogger().error("** YOU ARE RUNNING AS ROOT USER **");
+            this.getLogger().error(" ");
+            this.getLogger().error("Minecraft server software does not require root privileges");
+            this.getLogger().error("You should restart your server on different user account");
+            this.getLogger().error(" ");
+            this.getLogger().error("Loading will be continued in 5 seconds...");
+        }
+        ThreadUtil.sleep(5);
 
         final PluginManager pm = this.getServer().getPluginManager();
         final String serviceType = this.getConfig().getString("service.type");
@@ -43,5 +43,13 @@ public class SafetyProxyNukkit extends PluginBase {
             pm.disablePlugin(this);
         }
         pm.registerEvents(new PlayerLoginListener(this), this);
+
+        if (JavaUtil.isJavaVersionLessThan11()) {
+            this.getLogger().warning("** UNSUPPORTED JAVA VERSION DETECTED **");
+            this.getLogger().warning(" ");
+            this.getLogger().warning("> Hey! You are using unsupported Java version");
+            this.getLogger().warning("> Please update to Java 11 or higher");
+            this.getLogger().warning(" ");
+        }
     }
 }
