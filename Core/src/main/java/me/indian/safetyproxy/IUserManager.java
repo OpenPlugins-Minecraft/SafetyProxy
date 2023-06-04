@@ -1,9 +1,12 @@
 package me.indian.safetyproxy;
+
+import org.jetbrains.annotations.NotNull;
+
 public interface IUserManager {
 
-    void addUser(final String username);
+    void addUser(@NotNull final String username);
 
-    boolean isAlive(final String nickname);
+    boolean isAlive(@NotNull final String nickname);
 
-    void removeUser(final String username);
+    void removeUser(@NotNull final String username);
 }

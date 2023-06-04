@@ -1,5 +1,7 @@
 package me.indian.safetyproxy;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * The MessageService interface provides methods for publishing messages and adding message listeners.
  */
@@ -16,7 +18,7 @@ public interface MessageService {
      * @param object  The object to be published as a message.
      * @param subject The subject of the message.
      */
-    void publishMessage(final Object object, final String subject);
+    void publishMessage(@NotNull final Object object, @NotNull final String subject);
 
     /**
      * Adds a message listener to receive messages of type T.
@@ -24,5 +26,6 @@ public interface MessageService {
      * @param listener The message listener to be added.
      * @param <T>      The type of messages the listener should receive.
      */
-    <T> void addMessageListener(final AbstractMessageListener<T> listener);
+    @NotNull
+    <T> void addMessageListener(@NotNull final AbstractMessageListener<T> listener);
 }

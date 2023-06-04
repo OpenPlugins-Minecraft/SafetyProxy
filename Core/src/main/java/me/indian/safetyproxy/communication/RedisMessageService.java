@@ -5,6 +5,7 @@ import me.indian.safetyproxy.DataPacket;
 import me.indian.safetyproxy.MessageService;
 import me.indian.safetyproxy.serialization.JsonDeserializer;
 import me.indian.safetyproxy.serialization.JsonSerializer;
+import org.jetbrains.annotations.NotNull;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPubSub;
@@ -17,7 +18,7 @@ public class RedisMessageService implements MessageService {
     private JedisPool jedisPool;
     private ExecutorService executorService;
 
-    public RedisMessageService(final String host, final int port) {
+    public RedisMessageService(@NotNull final String host, final int port /* TODO: support for password */) {
         try {
             this.jedisPool = new JedisPool(host, port);
             this.executorService = Executors.newSingleThreadExecutor();
@@ -27,7 +28,7 @@ public class RedisMessageService implements MessageService {
     }
 
     @Override
-    public void publishMessage(final Object object, final String subject) {
+    public void publishMessage(@NotNull final Object object, @NotNull final String subject) {
         if (!object.getClass().isAssignableFrom(DataPacket.class)) {
             throw new UnsupportedOperationException("object must be of type DataPacket");
         }
@@ -39,7 +40,7 @@ public class RedisMessageService implements MessageService {
     }
 
     @Override
-    public <T> void addMessageListener(final AbstractMessageListener<T> listener) {
+    public <T> void addMessageListener(@NotNull final AbstractMessageListener<T> listener) {
         try (final Jedis jedis = this.jedisPool.getResource()) {
             jedis.subscribe(new JedisPubSub() {
                 @Override

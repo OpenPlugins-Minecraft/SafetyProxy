@@ -1,6 +1,7 @@
 package me.indian.safetyproxy.serialization;
 
 import me.indian.safetyproxy.helper.GsonHelper;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
 
@@ -17,7 +18,7 @@ public final class JsonDeserializer {
      * @param <T>   The type of the class to which the JSON data should be deserialized.
      * @return An instance of the specified class representing the deserialized JSON data.
      */
-    public static <T> T deserialize(final byte[] data, final Class<T> clazz) {
+    public static <T> T deserialize(final byte[] data, @NotNull final Class<T> clazz) {
         final String dataReceived = new String(data, StandardCharsets.UTF_8);
         return deserialize(dataReceived, clazz);
     }
@@ -31,7 +32,7 @@ public final class JsonDeserializer {
      * @return An instance of the specified class representing the deserialized JSON string.
      * @throws NullPointerException if the json parameter is null or empty.
      */
-    public static <T> T deserialize(final String json, final Class<T> clazz) {
+    public static <T> T deserialize(@NotNull final String json, @NotNull final Class<T> clazz) {
         if (json == null || json.isEmpty()) {
             throw new NullPointerException("Json cannot be null or empty");
         }

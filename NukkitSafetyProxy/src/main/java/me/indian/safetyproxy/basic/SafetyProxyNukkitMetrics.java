@@ -1,4 +1,4 @@
-package me.indian.safetyproxy.others;
+package me.indian.safetyproxy.basic;
 
 import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginLogger;
@@ -25,8 +25,8 @@ public class SafetyProxyNukkitMetrics {
     }
 
     public void run() {
-        executorService.execute(() -> {
-            boolean enabled = metrics.isEnabled();
+        this.executorService.execute(() -> {
+            final boolean enabled = this.metrics.isEnabled();
             try {
                 if (!enabled) {
                     this.logger.info(ColorUtil.color("&aMetrics is disabled"));

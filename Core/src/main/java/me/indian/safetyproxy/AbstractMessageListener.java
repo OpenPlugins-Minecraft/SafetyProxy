@@ -1,5 +1,7 @@
 package me.indian.safetyproxy;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * The AbstractMessageListener class is an abstract base class for implementing message listeners.
  *
@@ -16,7 +18,7 @@ public abstract class AbstractMessageListener<T> {
      * @param clazz   The class type of the messages that the listener handles.
      * @param subject The subject of the messages that the listener handles.
      */
-    public AbstractMessageListener(final Class<T> clazz, final String subject) {
+    public AbstractMessageListener(@NotNull final Class<T> clazz, @NotNull final String subject) {
         this.clazz = clazz;
         this.subject = subject;
     }
@@ -26,7 +28,7 @@ public abstract class AbstractMessageListener<T> {
      *
      * @param type The message of type T received by the listener.
      */
-    public abstract void onMessage(final T type);
+    public abstract void onMessage(@NotNull final T type);
 
     /**
      * Returns the class type of the messages that the listener handles.

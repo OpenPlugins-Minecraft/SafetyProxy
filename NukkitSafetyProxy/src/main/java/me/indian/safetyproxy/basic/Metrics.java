@@ -1,4 +1,4 @@
-package me.indian.safetyproxy.others;
+package me.indian.safetyproxy.basic;
 
 import cn.nukkit.Server;
 import cn.nukkit.plugin.Plugin;
@@ -33,14 +33,14 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPOutputStream;
 import javax.net.ssl.HttpsURLConnection;
-import me.indian.safetyproxy.other.MetricsUtil;
+import me.indian.safetyproxy.util.MetricsUtil;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
 /**
  * bStats collects some data for plugin authors.
  * <p>
- * Check out https://bStats.org/ to learn more about bStats!
+ * Check out <a href="https://bStats.org/">...</a> to learn more about bStats!
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class Metrics {
@@ -243,7 +243,7 @@ public class Metrics {
         final String pluginVersion = this.plugin.getDescription().getVersion();
 
         data.addProperty("pluginName", pluginName); // Append the name of the plugin
-        data.addProperty("id", MetricsUtil.pluginId); // Append the id of the plugin
+        data.addProperty("id", MetricsUtil.PLUGIN_ID); // Append the id of the plugin
         data.addProperty("pluginVersion", pluginVersion); // Append the version of the plugin
 
         final JsonArray customCharts = new JsonArray();

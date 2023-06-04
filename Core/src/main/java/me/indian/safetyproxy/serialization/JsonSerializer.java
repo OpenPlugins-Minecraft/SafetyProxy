@@ -1,6 +1,7 @@
 package me.indian.safetyproxy.serialization;
 
 import me.indian.safetyproxy.helper.GsonHelper;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The JsonSerializer class provides a utility method for serializing Java objects into JSON format.
@@ -14,7 +15,7 @@ public final class JsonSerializer {
      * @return A JSON string representing the serialized object.
      * @throws NullPointerException if the object parameter is null.
      */
-    public static String serialize(final Object object) {
+    public static String serialize(@NotNull final Object object) {
         if (object == null) {
             throw new NullPointerException("object cannot be null");
         }

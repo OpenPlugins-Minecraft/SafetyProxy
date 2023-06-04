@@ -16,7 +16,6 @@ import me.indian.safetyproxy.communication.NatsMessageService;
 import me.indian.safetyproxy.communication.RedisMessageService;
 import me.indian.safetyproxy.messaging.UserJoinListener;
 import me.indian.safetyproxy.messaging.UserLeaveListener;
-import me.indian.safetyproxy.util.JavaUtil;
 import me.indian.safetyproxy.util.PluginUtil;
 import me.indian.safetyproxy.util.SystemUtil;
 import me.indian.safetyproxy.util.ThreadUtil;
