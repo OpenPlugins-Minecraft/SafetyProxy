@@ -16,6 +16,7 @@ import me.indian.safetyproxy.communication.NatsMessageService;
 import me.indian.safetyproxy.communication.RedisMessageService;
 import me.indian.safetyproxy.messaging.UserJoinListener;
 import me.indian.safetyproxy.messaging.UserLeaveListener;
+import me.indian.safetyproxy.util.ColorUtil;
 import me.indian.safetyproxy.util.PluginUtil;
 import me.indian.safetyproxy.util.SystemUtil;
 import me.indian.safetyproxy.util.ThreadUtil;
@@ -33,6 +34,7 @@ public final class SafetyProxyWaterdogPe extends Plugin {
         final EventManager eventManager = this.getProxy().getEventManager();
         final Configuration config = this.getConfig();
         final String serviceType = config.getString("messaging-service.type");
+        final boolean debug = config.getBoolean("debug");
         final MessageService messageService;
 
         if (serviceType.toUpperCase(Locale.ROOT).equals("NATS")) {
@@ -55,8 +57,18 @@ public final class SafetyProxyWaterdogPe extends Plugin {
 
         final IUserManager userManager = new WaterdogUserManager();
         final MessageHandler messageHandler = new WaterdogMessageHandler(userManager);
-        messageService.addMessageListener(new UserJoinListener(messageHandler));
-        messageService.addMessageListener(new UserLeaveListener(messageHandler));
+        try {
+            messageService.addMessageListener(new UserJoinListener(messageHandler));
+            messageService.addMessageListener(new UserLeaveListener(messageHandler));
+        } catch (final Exception exception) {
+            this.getLogger().error(ColorUtil.color("&cCan't add messaging listeners , probably can't connect to&b " + serviceType.toLowerCase() + "&c,check this"));
+            this.getLogger().error(ColorUtil.color("&cPlugin is disabling...."));
+            if (debug) {
+                this.getLogger().error(String.valueOf(exception));
+            }
+            PluginUtil.shutdown(this);
+            return;
+        }
 
         eventManager.subscribe(PlayerPreLoginEvent.class, e -> new PlayerPreLoginListener(this, userManager));
         eventManager.subscribe(PlayerDisconnectEvent.class, e -> new PlayerDisconnectListener(userManager, messageService));
