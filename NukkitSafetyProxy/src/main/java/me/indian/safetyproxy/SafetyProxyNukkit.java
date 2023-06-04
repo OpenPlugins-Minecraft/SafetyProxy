@@ -26,7 +26,6 @@ public final class SafetyProxyNukkit extends PluginBase {
 
     @Override
     public void onEnable() {
-        System.out.println("działa 1");
         this.checkForRoot();
         this.saveDefaultConfig();
 
