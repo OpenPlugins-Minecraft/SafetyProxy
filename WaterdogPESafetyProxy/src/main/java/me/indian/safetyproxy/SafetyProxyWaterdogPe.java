@@ -1,9 +1,9 @@
 package me.indian.safetyproxy;
 
 import dev.waterdog.waterdogpe.event.EventManager;
-import dev.waterdog.waterdogpe.event.defaults.PlayerDisconnectEvent;
+import dev.waterdog.waterdogpe.event.EventPriority;
+import dev.waterdog.waterdogpe.event.defaults.PlayerDisconnectedEvent;
 import dev.waterdog.waterdogpe.event.defaults.PlayerLoginEvent;
-import dev.waterdog.waterdogpe.event.defaults.PlayerPreLoginEvent;
 import dev.waterdog.waterdogpe.plugin.Plugin;
 import dev.waterdog.waterdogpe.utils.config.Configuration;
 import io.nats.client.Options;
@@ -12,7 +12,6 @@ import me.indian.safetyproxy.communication.RedisMessageService;
 import me.indian.safetyproxy.handler.WaterdogMessageHandler;
 import me.indian.safetyproxy.listener.PlayerDisconnectListener;
 import me.indian.safetyproxy.listener.PlayerLoginListener;
-import me.indian.safetyproxy.listener.PlayerPreLoginListener;
 import me.indian.safetyproxy.manager.WaterdogUserManager;
 import me.indian.safetyproxy.messaging.UserJoinListener;
 import me.indian.safetyproxy.messaging.UserLeaveListener;
@@ -64,9 +63,8 @@ public final class SafetyProxyWaterdogPe extends Plugin {
             return;
         }
 
-        eventManager.subscribe(PlayerPreLoginEvent.class, e -> new PlayerPreLoginListener(this, userManager));
-        eventManager.subscribe(PlayerDisconnectEvent.class, e -> new PlayerDisconnectListener(userManager, messageService));
-        eventManager.subscribe(PlayerLoginEvent.class, e -> new PlayerLoginListener(userManager, messageService));
+        eventManager.subscribe(PlayerDisconnectedEvent.class, e -> new PlayerDisconnectListener(userManager, messageService), EventPriority.HIGHEST);
+        eventManager.subscribe(PlayerLoginEvent.class, e -> new PlayerLoginListener(userManager, messageService), EventPriority.HIGHEST);
     }
 
     private void checkForRoot() {

@@ -18,17 +18,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>waterdog-repo</id>
-            <url>https://repo.waterdog.dev/artifactory/main</url>
-        </repository>
-        <repository>
-            <id>opencollab-repo-snapshot</id>
-            <url>https://repo.opencollab.dev/main</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>me.indian</groupId>
@@ -39,8 +28,9 @@
         <dependency>
             <groupId>dev.waterdog.waterdogpe</groupId>
             <artifactId>waterdog</artifactId>
-            <version>1.2.5-SNAPSHOT</version>
-            <scope>provided</scope>
+            <version>SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/Waterdog.jar</systemPath>
         </dependency>
     </dependencies>
 

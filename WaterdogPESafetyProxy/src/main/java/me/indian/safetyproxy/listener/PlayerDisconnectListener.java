@@ -1,6 +1,6 @@
 package me.indian.safetyproxy.listener;
 
-import dev.waterdog.waterdogpe.event.defaults.PlayerDisconnectEvent;
+import dev.waterdog.waterdogpe.event.defaults.PlayerDisconnectedEvent;
 import dev.waterdog.waterdogpe.player.ProxiedPlayer;
 import me.indian.safetyproxy.IUserManager;
 import me.indian.safetyproxy.MessageService;
@@ -16,7 +16,7 @@ public class PlayerDisconnectListener {
         this.messageService = messageService;
     }
 
-    private void onDisconnect(final PlayerDisconnectEvent event) {
+    public void onDisconnect(final PlayerDisconnectedEvent event) {
         final ProxiedPlayer player = event.getPlayer();
         if (this.userManager.isAlive(player.getName())) {
             this.userManager.removeUser(player.getName());
