@@ -6,6 +6,7 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import me.indian.safetyproxy.IUserManager;
 import me.indian.safetyproxy.SafetyProxyNukkit;
+import me.indian.safetyproxy.util.ColorUtil;
 import me.indian.safetyproxy.util.TransferUtil;
 
 public class PlayerJoinListener implements Listener {
@@ -24,6 +25,9 @@ public class PlayerJoinListener implements Listener {
         if (!this.userManager.isAlive(player.getName())) {
             if (this.plugin.getConfig().getBoolean("transfer-settings.transfer-enabled")) {
                 TransferUtil.transfer(player, this.plugin.getConfig().getString("transfer-settings.proxy-address"));
+            } else {
+                player.kick(ColorUtil.color(this.plugin.getConfig().getString("messages.only-proxy-allowed")));
+                event.setCancelled(true);
             }
         }
     }

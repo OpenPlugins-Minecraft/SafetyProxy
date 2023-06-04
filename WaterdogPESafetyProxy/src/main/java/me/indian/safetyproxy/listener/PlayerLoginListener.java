@@ -1,6 +1,5 @@
 package me.indian.safetyproxy.listener;
 
-import dev.waterdog.waterdogpe.event.defaults.PlayerAuthenticatedEvent;
 import dev.waterdog.waterdogpe.event.defaults.PlayerLoginEvent;
 import dev.waterdog.waterdogpe.player.ProxiedPlayer;
 import me.indian.safetyproxy.IUserManager;
@@ -17,8 +16,7 @@ public class PlayerLoginListener {
         this.messageService = messageService;
     }
 
-    public void onLogin(final PlayerAuthenticatedEvent event) {
-
+    public void onLogin(final PlayerLoginEvent event) {
         final ProxiedPlayer player = event.getPlayer();
         this.userManager.addUser(player.getName());
 

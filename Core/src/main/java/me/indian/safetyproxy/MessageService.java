@@ -26,6 +26,5 @@ public interface MessageService {
      * @param listener The message listener to be added.
      * @param <T>      The type of messages the listener should receive.
      */
-    @NotNull
-    <T> void addMessageListener(@NotNull final AbstractMessageListener<T> listener);
+    @NotNull <T> void addMessageListener(@NotNull final AbstractMessageListener<T> listener);
 }

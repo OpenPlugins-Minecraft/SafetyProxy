@@ -1,5 +1,7 @@
 package me.indian.safetyproxy.communication;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import me.indian.safetyproxy.AbstractMessageListener;
 import me.indian.safetyproxy.MessageService;
 import me.indian.safetyproxy.serialization.JsonDeserializer;
@@ -9,9 +11,6 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPubSub;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 public class RedisMessageService implements MessageService {
 
     private JedisPool jedisPool;
@@ -20,7 +19,7 @@ public class RedisMessageService implements MessageService {
     public RedisMessageService(@NotNull final String host, final int port /* TODO: support for password */) {
         try {
             this.jedisPool = new JedisPool(host, port);
-            this.executorService  = Executors.newSingleThreadExecutor();
+            this.executorService = Executors.newSingleThreadExecutor();
         } catch (final Exception exception) {
             exception.printStackTrace();
         }

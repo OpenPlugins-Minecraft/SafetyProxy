@@ -9,12 +9,12 @@ import me.indian.safetyproxy.synchronization.UserLeaveDataPacket;
 import me.indian.safetyproxy.util.ColorUtil;
 
 public class PlayerDisconnectListener {
-    
+
     private final SafetyProxyWaterdogPe plugin;
     private final IUserManager userManager;
     private final MessageService messageService;
 
-    public PlayerDisconnectListener(final SafetyProxyWaterdogPe plugin,final IUserManager userManager, final MessageService messageService) {
+    public PlayerDisconnectListener(final SafetyProxyWaterdogPe plugin, final IUserManager userManager, final MessageService messageService) {
         this.plugin = plugin;
         this.userManager = userManager;
         this.messageService = messageService;
