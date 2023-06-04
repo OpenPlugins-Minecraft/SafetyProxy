@@ -1,5 +1,6 @@
 package me.indian.safetyproxy.others;
 
+import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginLogger;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import java.util.HashMap;
@@ -42,7 +43,7 @@ public class SafetyProxyNukkitMetrics {
 
     private void customMetrics() {
         this.metrics.addCustomChart(new Metrics.SimplePie("serverSoftware", () -> "Nukkit " + this.plugin.getServer().getVersion()));
-
+        this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> Server.getInstance().getNukkitVersion()));
         /*
         Code from https://github.com/CloudburstMC/Nukkit/blob/master/src/main/java/cn/nukkit/metrics/NukkitMetrics.java#L47
          */
