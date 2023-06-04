@@ -1,11 +1,17 @@
-package  me.indian.safetyproxy;
+package me.indian.safetyproxy;
 
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
 import cn.nukkit.utils.Config;
 import io.nats.client.Options;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import me.indian.safetyproxy.handler.NukkitMessageHandler;
 import me.indian.safetyproxy.listener.PlayerPreLoginListener;
+import me.indian.safetyproxy.listener.PlayerJoinListener;
 import me.indian.safetyproxy.listener.PlayerQuitListener;
 import me.indian.safetyproxy.manager.NukkitUserManager;
 import me.indian.safetyproxy.communication.NatsMessageService;
@@ -25,6 +31,7 @@ public final class SafetyProxyNukkit extends PluginBase {
 
     @Override
     public void onEnable() {
+        System.out.println("działa 1");
         this.checkForRoot();
         this.saveDefaultConfig();
 
@@ -33,7 +40,6 @@ public final class SafetyProxyNukkit extends PluginBase {
         final String serviceType = config.getString("messaging-service.type");
         final boolean debug = config.getBoolean("debug");
         final MessageService messageService;
-
         if (serviceType.toUpperCase(Locale.ROOT).equals("NATS")) {
             final Options options = new Options.Builder()
                     .server("nats://" + config.getString("messaging-service.host") + ":" + config.getInt("messaging-service.port"))
@@ -51,7 +57,6 @@ public final class SafetyProxyNukkit extends PluginBase {
             pluginManager.disablePlugin(this);
             return;
         }
-
         final IUserManager userManager = new NukkitUserManager();
         final MessageHandler messageHandler = new NukkitMessageHandler(userManager);
         try {
@@ -66,8 +71,10 @@ public final class SafetyProxyNukkit extends PluginBase {
             pluginManager.disablePlugin(this);
             return;
         }
-        pluginManager.registerEvents(new PlayerQuitListener(userManager), this);
+        pluginManager.registerEvents(new PlayerQuitListener(this, userManager), this);
         pluginManager.registerEvents(new PlayerPreLoginListener(this, userManager), this);
+        pluginManager.registerEvents(new PlayerJoinListener(this, userManager), this);
+
 
         new SafetyProxyNukkitMetrics(this, this.getLogger(), new Metrics(this)).run();
 
