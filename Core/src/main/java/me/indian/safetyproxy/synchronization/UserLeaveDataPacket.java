@@ -1,9 +1,8 @@
 package me.indian.safetyproxy.synchronization;
 
-import me.indian.safetyproxy.DataPacket;
 import org.jetbrains.annotations.NotNull;
 
-public class UserLeaveDataPacket extends DataPacket {
+public class UserLeaveDataPacket {
 
     private final String nickname;
 

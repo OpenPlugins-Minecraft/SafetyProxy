@@ -7,7 +7,6 @@ import io.nats.client.Nats;
 import io.nats.client.Options;
 import io.nats.client.impl.NatsMessage;
 import me.indian.safetyproxy.AbstractMessageListener;
-import me.indian.safetyproxy.DataPacket;
 import me.indian.safetyproxy.MessageService;
 import me.indian.safetyproxy.serialization.JsonDeserializer;
 import me.indian.safetyproxy.serialization.JsonSerializer;
@@ -33,9 +32,6 @@ public class NatsMessageService implements MessageService {
 
     @Override
     public void publishMessage(@NotNull final Object object, @NotNull final String subject) {
-        if (!object.getClass().isAssignableFrom(DataPacket.class)) {
-            throw new UnsupportedOperationException("object must be of type DataPacket");
-        }
         this.executorService.execute(() -> {
             final String json = JsonSerializer.serialize(object);
             final Message message = NatsMessage.builder()
