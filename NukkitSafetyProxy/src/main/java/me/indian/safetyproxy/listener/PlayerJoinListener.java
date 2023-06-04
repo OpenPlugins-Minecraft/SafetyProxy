@@ -27,7 +27,6 @@ public class PlayerJoinListener implements Listener {
                 TransferUtil.transfer(player, this.plugin.getConfig().getString("transfer-settings.proxy-address"));
             } else {
                 player.kick(ColorUtil.color(this.plugin.getConfig().getString("messages.only-proxy-allowed")));
-                event.setCancelled(true);
             }
         }
     }
