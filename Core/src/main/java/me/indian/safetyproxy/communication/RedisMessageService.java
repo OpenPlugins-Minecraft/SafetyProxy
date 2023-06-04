@@ -21,7 +21,7 @@ public class RedisMessageService implements MessageService {
     public RedisMessageService(@NotNull final String host, final int port /* TODO: support for password */) {
         try {
             this.jedisPool = new JedisPool(host, port);
-            this.executorService  = Executors.newFixedThreadPool(5, new ThreadFactoryBuilder().setNameFormat("SafetyProxy-%d").build());
+            this.executorService  = Executors.newSingleThreadExecutor();
         } catch (final Exception exception) {
             exception.printStackTrace();
         }

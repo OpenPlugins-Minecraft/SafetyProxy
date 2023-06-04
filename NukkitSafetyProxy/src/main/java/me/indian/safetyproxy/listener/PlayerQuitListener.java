@@ -6,7 +6,6 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerQuitEvent;
 import me.indian.safetyproxy.IUserManager;
 import me.indian.safetyproxy.SafetyProxyNukkit;
-import me.indian.safetyproxy.util.ColorUtil;
 
 public class PlayerQuitListener implements Listener {
 

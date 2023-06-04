@@ -2,11 +2,8 @@ package me.indian.safetyproxy.basic;
 
 import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginLogger;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import me.indian.safetyproxy.SafetyProxyNukkit;
 import me.indian.safetyproxy.util.ColorUtil;
 
@@ -15,17 +12,15 @@ public class SafetyProxyNukkitMetrics {
     private final SafetyProxyNukkit plugin;
     private final PluginLogger logger;
     private final Metrics metrics;
-    private final ExecutorService executorService;
 
     public SafetyProxyNukkitMetrics(final SafetyProxyNukkit plugin, final PluginLogger logger, final Metrics metrics) {
         this.plugin = plugin;
         this.logger = logger;
         this.metrics = metrics;
-        this.executorService = Executors.newSingleThreadExecutor(new ThreadFactoryBuilder().setNameFormat("SafetyProxy-Metrics-%d").build());
     }
 
     public void run() {
-        this.executorService.execute(() -> {
+        final Thread thread = new Thread(() -> {
             final boolean enabled = this.metrics.isEnabled();
             try {
                 if (!enabled) {
@@ -39,6 +34,8 @@ public class SafetyProxyNukkitMetrics {
                 this.logger.error(e.getMessage());
             }
         });
+        thread.setName("SafetyProxy Metrics Thread");
+        thread.start();
     }
 
     private void customMetrics() {

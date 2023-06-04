@@ -5,10 +5,6 @@ import cn.nukkit.plugin.PluginManager;
 import cn.nukkit.utils.Config;
 import io.nats.client.Options;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import me.indian.safetyproxy.handler.NukkitMessageHandler;
 import me.indian.safetyproxy.listener.PlayerPreLoginListener;
 import me.indian.safetyproxy.listener.PlayerJoinListener;
@@ -20,7 +16,6 @@ import me.indian.safetyproxy.messaging.UserJoinListener;
 import me.indian.safetyproxy.messaging.UserLeaveListener;
 import me.indian.safetyproxy.basic.Metrics;
 import me.indian.safetyproxy.basic.SafetyProxyNukkitMetrics;
-import me.indian.safetyproxy.util.ColorUtil;
 import me.indian.safetyproxy.util.JavaUtil;
 import me.indian.safetyproxy.util.SystemUtil;
 import me.indian.safetyproxy.util.ThreadUtil;
@@ -38,7 +33,6 @@ public final class SafetyProxyNukkit extends PluginBase {
         final PluginManager pluginManager = this.getServer().getPluginManager();
         final Config config = this.getConfig();
         final String serviceType = config.getString("messaging-service.type");
-        final boolean debug = config.getBoolean("debug");
         final MessageService messageService;
         if (serviceType.toUpperCase(Locale.ROOT).equals("NATS")) {
             final Options options = new Options.Builder()
@@ -63,11 +57,7 @@ public final class SafetyProxyNukkit extends PluginBase {
             messageService.addMessageListener(new UserJoinListener(messageHandler));
             messageService.addMessageListener(new UserLeaveListener(messageHandler));
         } catch (final Exception exception) {
-            this.getLogger().critical(ColorUtil.color("&cCan't add messaging listeners , probably can't connect to&b " + serviceType.toLowerCase() + "&c,check this"));
-            this.getLogger().critical(ColorUtil.color("&cPlugin is disabling...."));
-            if (debug) {
-                this.getLogger().error(String.valueOf(exception));
-            }
+            exception.printStackTrace();
             pluginManager.disablePlugin(this);
             return;
         }
@@ -75,10 +65,7 @@ public final class SafetyProxyNukkit extends PluginBase {
         pluginManager.registerEvents(new PlayerPreLoginListener(this, userManager), this);
         pluginManager.registerEvents(new PlayerJoinListener(this, userManager), this);
 
-
         new SafetyProxyNukkitMetrics(this, this.getLogger(), new Metrics(this)).run();
-
-
         this.checkForJava11();
     }
 
