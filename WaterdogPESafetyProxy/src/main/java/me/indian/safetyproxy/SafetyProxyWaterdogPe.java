@@ -2,6 +2,7 @@ package me.indian.safetyproxy;
 
 import dev.waterdog.waterdogpe.event.EventManager;
 import dev.waterdog.waterdogpe.event.EventPriority;
+import dev.waterdog.waterdogpe.event.defaults.PlayerAuthenticatedEvent;
 import dev.waterdog.waterdogpe.event.defaults.PlayerDisconnectedEvent;
 import dev.waterdog.waterdogpe.event.defaults.PlayerLoginEvent;
 import dev.waterdog.waterdogpe.plugin.Plugin;
@@ -64,7 +65,7 @@ public final class SafetyProxyWaterdogPe extends Plugin {
         }
 
         eventManager.subscribe(PlayerDisconnectedEvent.class, e -> new PlayerDisconnectListener(this, userManager, messageService).onDisconnect(e), EventPriority.HIGHEST);
-        eventManager.subscribe(PlayerLoginEvent.class, e -> new PlayerLoginListener(userManager, messageService).onLogin(e), EventPriority.HIGHEST);
+        eventManager.subscribe(PlayerAuthenticatedEvent.class, e -> new PlayerLoginListener(userManager, messageService).onLogin(e), EventPriority.HIGHEST);
     }
 
     private void checkForRoot() {
