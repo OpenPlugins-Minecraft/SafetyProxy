@@ -21,7 +21,7 @@ public class RedisMessageService implements MessageService {
     public RedisMessageService(@NotNull final String host, final int port /* TODO: support for password */) {
         try {
             this.jedisPool = new JedisPool(host, port);
-            this.executorService = Executors.newSingleThreadExecutor();
+            this.executorService  = Executors.newFixedThreadPool(5, new ThreadFactoryBuilder().setNameFormat("SafetyProxy-%d").build());
         } catch (final Exception exception) {
             exception.printStackTrace();
         }
@@ -41,14 +41,16 @@ public class RedisMessageService implements MessageService {
 
     @Override
     public <T> void addMessageListener(@NotNull final AbstractMessageListener<T> listener) {
-        try (final Jedis jedis = this.jedisPool.getResource()) {
-            jedis.subscribe(new JedisPubSub() {
-                @Override
-                public void onMessage(final String channel, final String message) {
-                    final T dataReceived = JsonDeserializer.deserialize(message, listener.getClazz());
-                    listener.onMessage(dataReceived);
-                }
-            }, MessageService.SUBJECT);
-        }
+        this.executorService.execute(() -> {
+            try (final Jedis jedis = this.jedisPool.getResource()) {
+                jedis.subscribe(new JedisPubSub() {
+                    @Override
+                    public void onMessage(final String channel, final String message) {
+                        final T dataReceived = JsonDeserializer.deserialize(message, listener.getClazz());
+                        listener.onMessage(dataReceived);
+                    }
+                }, MessageService.SUBJECT);
+            }
+        });
     }
 }

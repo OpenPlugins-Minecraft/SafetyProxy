@@ -25,7 +25,7 @@ public class NatsMessageService implements MessageService {
     public NatsMessageService(@NotNull final Options options) {
         try {
             this.connection = Nats.connect(options);
-            this.executorService = Executors.newSingleThreadExecutor();
+            this.executorService = Executors.newFixedThreadPool(5, new ThreadFactoryBuilder().setNameFormat("SafetyProxy-%d").build());
         } catch (final IOException | InterruptedException exception) {
             exception.printStackTrace();
         }
@@ -48,10 +48,12 @@ public class NatsMessageService implements MessageService {
 
     @Override
     public <T> void addMessageListener(@NotNull final AbstractMessageListener<T> listener) {
+        this.executorService.execute(() -> {
         final Dispatcher dispatcher = this.connection.createDispatcher(message -> {
             final T dataReceived = JsonDeserializer.deserialize(message.getData(), listener.getClazz());
             listener.onMessage(dataReceived);
         });
         dispatcher.subscribe(MessageService.SUBJECT);
+        });
     }
 }
