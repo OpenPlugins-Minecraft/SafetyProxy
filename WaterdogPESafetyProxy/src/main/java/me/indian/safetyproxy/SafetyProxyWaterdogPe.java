@@ -63,7 +63,7 @@ public final class SafetyProxyWaterdogPe extends Plugin {
             return;
         }
 
-        eventManager.subscribe(PlayerDisconnectedEvent.class, e -> new PlayerDisconnectListener(userManager, messageService).onDisconnect(e), EventPriority.HIGHEST);
+        eventManager.subscribe(PlayerDisconnectedEvent.class, e -> new PlayerDisconnectListener(this, userManager, messageService).onDisconnect(e), EventPriority.HIGHEST);
         eventManager.subscribe(PlayerLoginEvent.class, e -> new PlayerLoginListener(userManager, messageService).onLogin(e), EventPriority.HIGHEST);
     }
 

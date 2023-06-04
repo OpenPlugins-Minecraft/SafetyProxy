@@ -6,6 +6,7 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerQuitEvent;
 import me.indian.safetyproxy.IUserManager;
 import me.indian.safetyproxy.SafetyProxyNukkit;
+import me.indian.safetyproxy.util.ColorUtil;
 
 public class PlayerQuitListener implements Listener {
 
@@ -21,7 +22,7 @@ public class PlayerQuitListener implements Listener {
     private void onDisconnect(final PlayerQuitEvent event) {
         final Player player = event.getPlayer();
         if (!this.userManager.isAlive(player.getName())) {
-            this.plugin.getLogger().error("&cleave state at non existing use");
+            this.plugin.getLogger().error(ColorUtil.color("&cleave state at non existing use"));
         }
     }
 }
