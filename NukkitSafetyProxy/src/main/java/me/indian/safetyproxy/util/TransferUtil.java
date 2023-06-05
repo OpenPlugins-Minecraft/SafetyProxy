@@ -1,6 +1,7 @@
 package me.indian.safetyproxy.util;
 
 import cn.nukkit.Player;
+
 import java.net.InetSocketAddress;
 
 public final class TransferUtil {

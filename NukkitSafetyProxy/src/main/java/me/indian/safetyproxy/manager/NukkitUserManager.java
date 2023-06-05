@@ -1,8 +1,9 @@
 package me.indian.safetyproxy.manager;
 
+import me.indian.safetyproxy.IUserManager;
+
 import java.util.ArrayList;
 import java.util.List;
-import me.indian.safetyproxy.IUserManager;
 
 public class NukkitUserManager implements IUserManager {
 

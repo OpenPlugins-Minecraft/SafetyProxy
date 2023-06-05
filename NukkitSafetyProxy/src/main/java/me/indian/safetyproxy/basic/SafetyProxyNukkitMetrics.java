@@ -2,10 +2,11 @@ package me.indian.safetyproxy.basic;
 
 import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginLogger;
-import java.util.HashMap;
-import java.util.Map;
 import me.indian.safetyproxy.SafetyProxyNukkit;
 import me.indian.safetyproxy.util.ColorUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SafetyProxyNukkitMetrics {
 

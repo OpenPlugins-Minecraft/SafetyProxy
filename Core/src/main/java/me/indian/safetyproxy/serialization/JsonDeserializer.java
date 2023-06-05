@@ -1,8 +1,9 @@
 package me.indian.safetyproxy.serialization;
 
-import java.nio.charset.StandardCharsets;
 import me.indian.safetyproxy.helper.GsonHelper;
 import org.jetbrains.annotations.NotNull;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * The JsonDeserializer class provides utility methods for deserializing JSON data into Java objects.

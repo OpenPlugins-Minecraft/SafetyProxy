@@ -6,14 +6,15 @@ import io.nats.client.Message;
 import io.nats.client.Nats;
 import io.nats.client.Options;
 import io.nats.client.impl.NatsMessage;
-import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import me.indian.safetyproxy.AbstractMessageListener;
 import me.indian.safetyproxy.MessageService;
 import me.indian.safetyproxy.serialization.JsonDeserializer;
 import me.indian.safetyproxy.serialization.JsonSerializer;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class NatsMessageService implements MessageService {
 

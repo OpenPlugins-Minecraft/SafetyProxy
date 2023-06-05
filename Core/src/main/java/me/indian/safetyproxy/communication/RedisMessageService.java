@@ -1,7 +1,5 @@
 package me.indian.safetyproxy.communication;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import me.indian.safetyproxy.AbstractMessageListener;
 import me.indian.safetyproxy.MessageService;
 import me.indian.safetyproxy.serialization.JsonDeserializer;
@@ -10,6 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPubSub;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RedisMessageService implements MessageService {
 

@@ -4,7 +4,6 @@ import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
 import cn.nukkit.utils.Config;
 import io.nats.client.Options;
-import java.util.Locale;
 import me.indian.safetyproxy.basic.Metrics;
 import me.indian.safetyproxy.basic.SafetyProxyNukkitMetrics;
 import me.indian.safetyproxy.communication.NatsMessageService;
@@ -18,6 +17,8 @@ import me.indian.safetyproxy.messaging.UserLeaveListener;
 import me.indian.safetyproxy.util.JavaUtil;
 import me.indian.safetyproxy.util.SystemUtil;
 import me.indian.safetyproxy.util.ThreadUtil;
+
+import java.util.Locale;
 
 public final class SafetyProxyNukkit extends PluginBase {
 
